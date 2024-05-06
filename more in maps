@@ -1,0 +1,53 @@
+#include <iostream>
+#include <map>
+#include <string>
+#include <algorithm>
+using namespace std;
+template <typename type>
+struct comp {
+    bool operator()(const type & first, const type & second) const {
+        return first < second;
+    }
+};
+
+int main() {
+    map<string, int> Grade_By_Name;
+    Grade_By_Name["John"] = 90;
+    Grade_By_Name["Mike"] = 80;
+    Grade_By_Name["Peter"] = 70;
+    Grade_By_Name["Mary"] = 60;
+    Grade_By_Name["Nancy"] = 50;
+    Grade_By_Name["Noran"] = 100;
+
+    map<string, int> lowercase_Grade_By_Name;
+    for (const auto& pair : Grade_By_Name) {
+        string lowercase_key;
+        transform(pair.first.begin(), pair.first.end(), back_inserter(lowercase_key), ::tolower);
+        lowercase_Grade_By_Name[lowercase_key] = pair.second;
+    }
+
+    string name;
+    cin >> name;
+    for (char& c : name) {
+        c = tolower(c);
+    }
+    int c = 0;
+    for (auto it = lowercase_Grade_By_Name.begin(); it != lowercase_Grade_By_Name.end(); it++) {
+        if (it->first == name) {
+            cout << "The grade of " << name << " is " << it->second << endl;
+            c = 1;
+            break;
+        }
+    }
+    if (c == 0) {
+        cout << "Not found" << endl;
+    }
+    map<int, string, comp<int> > mp;
+    mp[20] = "E";
+    mp[90] = "A";
+    mp[80] = "B";
+    mp[170] = "C";
+    for (auto i : mp) {
+        cout << i.first << " " << i.second << endl;
+    }
+}
