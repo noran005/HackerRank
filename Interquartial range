@@ -1,0 +1,37 @@
+#include <bits/stdc++.h>
+using namespace std;
+
+int main() {
+    int n;
+    cin >> n;
+    int arr[n],freq[n],s[100];
+    int k = 0;
+    for (int i = 0; i < n; i++) {
+        cin >> arr[i];
+    }
+    for (int i = 0; i < n; i++) {
+        cin >> freq[i];
+    }
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < freq[i]; j++) {
+            s[k++] = arr[i];
+        }
+    }
+    sort(s, s + k);
+    double first_quartile, third_quartile;
+    if (k % 2 != 0) {
+        first_quartile = (s[k / 4 - 1] + s[k / 4]) / 2.0;
+        third_quartile = (s[3 * n / 4 + 1] + s[3 * n / 4]) / 2.0;
+    } else {
+        if (k % 4 == 0) {
+            first_quartile = (s[k / 4] + s[k / 4 - 1]) / 2.0;
+            third_quartile = (s[3 * k / 4] + s[3 * k / 4 - 1]) / 2.0;
+        }
+        else {
+            first_quartile = s[k / 4];
+            third_quartile = s[3 * k / 4];
+        }
+    }
+    cout <<fixed << setprecision(1) << third_quartile - first_quartile << endl;
+    return 0;
+}
